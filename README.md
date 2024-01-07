@@ -95,3 +95,95 @@
 ![AD19](https://github.com/AbrahamWire/configure-ad/assets/155400161/74ec2c67-5244-48fe-b3bc-25139893dfbc)
 
 <p>The server will restart so do not worry</p>
+
+<p>Log back in as "Yourdomain.com\Youruser</p>
+
+![AD20](https://github.com/AbrahamWire/configure-ad/assets/155400161/98b02724-b51f-4635-84de-76610cbb4697)
+
+<p>Now go to tools(in Server Manager) and click on Active Directory Users and Computers</p>
+
+![AD21](https://github.com/AbrahamWire/configure-ad/assets/155400161/10e38331-844f-4dc7-aa49-6d0db7a0d67f)
+
+<p>Now create a new "Organizational Unit" by right clicking "yourdomain.com" and name it _EMPLOYEES and another one named _ADMINS</p>
+
+![AD22](https://github.com/AbrahamWire/configure-ad/assets/155400161/868b2921-0675-42d5-817d-94af92aea9f5)
+
+<p>Right click _ADMINS and press users</p>
+
+![AD23](https://github.com/AbrahamWire/configure-ad/assets/155400161/ea2516cd-cc65-4dfe-ad30-ca15e15fb607)
+
+<p>Lets name this user Jane Doe. Lets put her user as jane.doe.</p>
+
+![AD24](https://github.com/AbrahamWire/configure-ad/assets/155400161/a38f6de8-52ba-4cf2-93af-49108818630b)
+
+<p>Choose whichever password you want but make sure to take note of it. Make sure to tick the box that prevents the password from expiring.</p>
+
+![AD25](https://github.com/AbrahamWire/configure-ad/assets/155400161/2f42f99d-ace9-4038-9d77-7beeee39ac4d)
+
+<p>Right click on Jane Doe and add this user to a group called Domain Users</p>
+
+![AD26](https://github.com/AbrahamWire/configure-ad/assets/155400161/cc317ee4-88b0-49f3-8f03-91906781e6e0)
+
+<p>Log out of the Domain Controller and log back in as jane doe. You will be using this user for now on.</p>
+
+![AD27](https://github.com/AbrahamWire/configure-ad/assets/155400161/54d27365-6d94-444d-be4a-bd57797d606b)
+
+<p>NOTE: If you are having issues signing into Jane Doe(aka myself). Add Jane Doe to Administrators Security Groups as well.</p>
+
+![AD28](https://github.com/AbrahamWire/configure-ad/assets/155400161/c6e55795-419f-49dd-9854-122164d3bfbd)
+
+<h1>Part 5: Joining Client-1 to DC-1</h1>
+
+<p>In Azure go to Client-1 and go to networking. Press network interface then DNS servers. Tick the customs box and type DC-1 private IP address. Then Restart Client-1</p>
+
+![AD29](https://github.com/AbrahamWire/configure-ad/assets/155400161/fdf34345-f98d-42b9-bccb-b261e09b2e8d)
+
+![AD30](https://github.com/AbrahamWire/configure-ad/assets/155400161/60192e07-f032-4d01-8390-aad36cd15e18)
+
+<p>Sign back into Client-1 as your regular user and go to control panel and type "join a domain" in the search bar</p>
+
+![AD31](https://github.com/AbrahamWire/configure-ad/assets/155400161/4e938b0f-557e-41af-b501-bc9648582323)
+
+<p>Tick the domain box and type your domain name in the box</p>
+
+![AD32](https://github.com/AbrahamWire/configure-ad/assets/155400161/027ec974-6ccb-4096-ae1c-4fbc9b13ae22)
+
+![AD33](https://github.com/AbrahamWire/configure-ad/assets/155400161/10ebccc3-74a4-4932-aedd-eba51742c7e1)
+
+<p>Let the VM Restart. Back in the Domain Controller open Active Directory Users and Computers and verifyif Client-1 shows up</p>
+
+![AD34](https://github.com/AbrahamWire/configure-ad/assets/155400161/39e36db0-b1bc-491b-838e-dc25d47cff89)
+
+<p>Now log into Client-1 as your "wire.com\labuser"</p>
+<p>Then go to your system properties and click on advanced then remote and add Domain Users so unauthorized users can log in.</p>
+
+![AD35](https://github.com/AbrahamWire/configure-ad/assets/155400161/30307f22-d338-475a-bebe-af7e2ead3cf3)
+
+<h1>Part 6: Creating Multiple users and changing passwords</h1>
+
+<p>Back in the Domain Controller logged in as Jane of course. Open Powershell ISE as an administrator.</p>
+
+![AD36](https://github.com/AbrahamWire/configure-ad/assets/155400161/ad60499d-3c7b-4fc5-a31f-57f4bcc6d7ea)
+
+<p>Create a new script and copy this code (https://github.com/joshmadakor1/AD_PS/blob/master/Generate-Names-Create-Users.ps1) and paste it on to your script. Edit the script so that only 500 accounts are made</p>
+
+![AD37](https://github.com/AbrahamWire/configure-ad/assets/155400161/6e951e71-9c63-461e-8df7-ede7a34c673a)
+
+<p>Now just run the script</p>
+
+<p>Once the script is done go to Active Directory Users and Computers and go to _EMPLOYEES. Choose any random employee and copy the user name.</p>
+
+![AD38](https://github.com/AbrahamWire/configure-ad/assets/155400161/40623ec7-a91c-40ac-a27e-86b68970d80b)
+
+<p>Sign into Client-1 with that user. Take note that the password is "Password1"</p>
+
+![AD39](https://github.com/AbrahamWire/configure-ad/assets/155400161/9ecbbc95-50fa-48e9-bfd2-9b4236f99fe7)
+
+<p>Sign out of the client and back in the Domain Controller chang that same users password by right clicking and type whatever you like</p>
+
+![AD40](https://github.com/AbrahamWire/configure-ad/assets/155400161/9b8a6f57-0a1c-4d2d-9086-a030a3d4ced7)
+
+<p>Sign into the Client again with that same user</p>
+
+<h1>Conclusion</h1>
+<p>Thats the end of my Project/Tutorial! I hope you learned something! Continue toimmerse yourself with knowledge and continue to experiment with Active Directory!</p>
